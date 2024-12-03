@@ -78,7 +78,7 @@ def create_label(file_path):
          folder_path = os.path.join(file_path , folder_name)
          for file_name in os.listdir(folder_path):
              if file_name.endswith('.jpg'):
-                 image_data.append({'image_name':file_name , 'label':label})
+                 image_data.append({'folder': folder_name, 'image_name':file_name , 'label':label})
     df = pd.DataFrame(image_data)
     df.to_excel('image_label.xlsx' , index = False)
     return(df)
@@ -91,8 +91,21 @@ def preprocess_data(spreadsheet , file_path ,target_size=(224,224)):
     images =[]
     labels =[]
     for index, row in spreadsheet.iterrows():
+        histology_type = row['folder']
         histology_file = row['image_name']
         label = row['label']
+
+        # i think this is the tricky part 
+        # I think i need to somehow make the computer recognize the histology type and join the images to the file name 
+        # i am unsure how to do this effectivly 
+        '''
+        for index in histology_type :
+            if index > 5000 :
+                break 
+            elif:
+            
+        
+        '''
         image_path = os.path.join(file_path , histology_file)
         print (image_path)
         if os.path.exists(image_path):
